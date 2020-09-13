@@ -37,7 +37,6 @@ class Splash extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 )
               ])),
-      
     );
   }
 }
