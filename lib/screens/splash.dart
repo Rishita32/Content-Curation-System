@@ -11,22 +11,25 @@ class Splash extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "cheer!",
+                  "Cheer!",
                   style: TextStyle(
                     fontSize: 80.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey[800],
+                    color: Colors.grey[600],
                   ),
                 ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: Text('Login'),
-                  color: Colors.black,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                Container(
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: Text('Login'),
+                    color: Colors.black,
+                    textColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  ),
                 ),
+                SizedBox(width: 20, height: 30),
                 RaisedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/register');
@@ -37,7 +40,6 @@ class Splash extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 )
               ])),
-      
     );
   }
 }
