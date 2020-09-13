@@ -13,22 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<Usera>.value(
-      value: AuthService().user,
-      child:MaterialApp(
-      home: Wrapper(),
-      // initialRoute: '/login',
-      routes: {
-        '/splash': (context) => Splash(),
-        '/login': (context) => Login(),
-        '/register': (context) => Register(),
-      },
-    )
-      
-    );
+        value: AuthService().user,
+        child: MaterialApp(
+          home: Wrapper(),
+          // initialRoute: '/login',
+          routes: {
+            '/splash': (context) => Splash(),
+            '/login': (context) => Login(),
+            '/register': (context) => Register(),
+          },
+        ));
   }
 }
-
-
 
 // appBar: AppBar(
 //         backgroundColor: Colors.white,
@@ -36,11 +32,11 @@ class MyApp extends StatelessWidget {
 //         iconTheme: IconThemeData(color: Colors.orange),
 //       ),
 
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   backgroundColor: Colors.orange,
-      //   child: Icon(
-      //     Icons.arrow_forward,
-      //     color: Colors.black,
-      //   ),
-      // ),
+// floatingActionButton: FloatingActionButton(
+//   onPressed: () {},
+//   backgroundColor: Colors.orange,
+//   child: Icon(
+//     Icons.arrow_forward,
+//     color: Colors.black,
+//   ),
+// ),
