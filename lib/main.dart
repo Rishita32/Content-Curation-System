@@ -1,4 +1,6 @@
 import 'package:CheerApp/models/usera.dart';
+import 'package:CheerApp/screens/authenticate/selectCategories.dart';
+import 'package:CheerApp/screens/home/feed.dart';
 import 'package:CheerApp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:CheerApp/screens/authenticate/login.dart';
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
             '/splash': (context) => Splash(),
             '/login': (context) => Login(),
             '/register': (context) => Register(),
+            '/feed': (context) => Feed(),
+            '/selectCategories': (context) => SelectCategories(),
           },
         ));
   }
@@ -32,12 +36,3 @@ class MyApp extends StatelessWidget {
 //         elevation: 0,
 //         iconTheme: IconThemeData(color: Colors.orange),
 //       ),
-
-// floatingActionButton: FloatingActionButton(
-//   onPressed: () {},
-//   backgroundColor: Colors.orange,
-//   child: Icon(
-//     Icons.arrow_forward,
-//     color: Colors.black,
-//   ),
-// ),

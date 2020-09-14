@@ -115,9 +115,10 @@ class _RegisterState extends State<Register> {
                         error = 'Please supply a valid email';
                       });
                     } else {
-                      Navigator.pushNamed(context, '/feed');
+                      print("user registered");
+                      Navigator.pushNamed(context, '/selectCategories');
                       setState(() {
-                        error = '';
+                        error = 'user registered';
                       });
                     }
                   }
