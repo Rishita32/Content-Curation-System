@@ -7,6 +7,7 @@ import 'package:CheerApp/screens/authenticate/splash.dart';
 import 'package:CheerApp/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
