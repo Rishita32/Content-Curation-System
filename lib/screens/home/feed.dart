@@ -129,7 +129,6 @@ class Feed extends StatefulWidget {
       ),
     );
   }
-<<<<<<< HEAD
   Widget chat(String message, int data) {
     // ignore: non_constant_identifier_names
     var BubbleNip;
@@ -169,6 +168,3 @@ class Feed extends StatefulWidget {
         Bubble({Radius radius, ColorSwatch<int> color, double elevation, Alignment alignment, nip, Padding child}) {}
 }
 
-=======
-}
->>>>>>> 8550ad8c5e028b1364d510218e4397c59e0fe89e
