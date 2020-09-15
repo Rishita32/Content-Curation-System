@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:CheerApp/models/usera.dart';
+import 'package:CheerApp/models/authModel.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  Usera _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? Usera(uid: user.uid) : null;
+  AuthModel _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? AuthModel(uid: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<Usera> get user {
+  Stream<AuthModel> get user {
     return _auth.onAuthStateChanged
         //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
