@@ -1,4 +1,4 @@
-import 'package:CheerApp/models/usera.dart';
+import 'package:CheerApp/models/authModel.dart';
 import 'package:CheerApp/screens/authenticate/selectCategories.dart';
 import 'package:CheerApp/screens/home/feed.dart';
 import 'package:CheerApp/services/auth.dart';
@@ -9,15 +9,15 @@ import 'package:CheerApp/screens/authenticate/splash.dart';
 import 'package:CheerApp/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Usera>.value(
+    return StreamProvider<AuthModel>.value(
         value: AuthService().user,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: Wrapper(),
           // initialRoute: '/login',
           routes: {

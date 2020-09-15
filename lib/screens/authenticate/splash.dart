@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.amber[400],
       body: Center(
           heightFactor: 40,
           child: Column(
@@ -16,10 +15,13 @@ class Splash extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 80.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
+                    color: Colors.black,
                   ),
                 ),
+                SizedBox(height: 120),
                 Container(
+                  height: 45,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: RaisedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
@@ -30,15 +32,19 @@ class Splash extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   ),
                 ),
-                SizedBox(width: 20, height: 30),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  child: Text('Register'),
-                  color: Colors.black,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                SizedBox(height: 20),
+                Container(
+                  height: 45,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/register');
+                    },
+                    child: Text('Register'),
+                    color: Colors.black,
+                    textColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  ),
                 )
               ])),
     );

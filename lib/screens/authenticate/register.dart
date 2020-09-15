@@ -179,11 +179,3 @@ class _RegisterState extends State<Register> {
     ));
   }
 }
-
-// RaisedButton(
-//                   onPressed: () {},
-//                   child: Text('Register'),
-//                   color: Colors.black,
-//                   textColor: Colors.white,
-//                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                 )
