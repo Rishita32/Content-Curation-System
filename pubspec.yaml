@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dialogflow: ^0.1.3
-
+  bubble: ^1.1.9+1
+  intl: ^0.16.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -33,6 +34,7 @@ dependencies:
   cloud_firestore: ^0.12.9+4
   provider: ^3.1.0
 
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,8 +51,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 assets:
-  assets/cheer-a319f-7574a652fe56.json
-
+  - assets/service.json
+  - assets/default.jpg
+  - assets/robot.jpg
 
   
   # To add assets to your application, add an assets section, like this:
