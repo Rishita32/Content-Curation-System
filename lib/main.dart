@@ -1,7 +1,7 @@
 import 'package:CheerApp/models/authModel.dart';
+import 'package:CheerApp/models/user.dart';
 import 'package:CheerApp/screens/authenticate/selectCategories.dart';
-import 'package:CheerApp/screens/home/feed.dart';
-import 'package:CheerApp/services/auth.dart';
+import 'package:CheerApp/screens/home/chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:CheerApp/screens/authenticate/login.dart';
 import 'package:CheerApp/screens/authenticate/register.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<AuthModel>.value(
-        value: AuthService().user,
+        value: User().user,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Wrapper(),
@@ -30,9 +30,3 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
-
-// appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 0,
-//         iconTheme: IconThemeData(color: Colors.orange),
-//       ),

@@ -1,6 +1,6 @@
 import 'package:CheerApp/models/authModel.dart';
 import 'package:CheerApp/screens/authenticate/splash.dart';
-import 'package:CheerApp/screens/home/feed.dart';
+import 'package:CheerApp/screens/home/chatbot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -28,7 +28,7 @@ class SelectCategories extends StatelessWidget {
               ),
             ),
             SizedBox(
-                height: 300,
+                height: 400,
                 child: GridView.count(crossAxisCount: 4,
                     // primary: false,
                     // padding: const EdgeInsets.all(20),
@@ -282,7 +282,7 @@ class SelectCategories extends StatelessWidget {
           ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/feed');
+          Navigator.pushReplacementNamed(context, '/feed');
         },
         backgroundColor: Colors.orange,
         child: Icon(

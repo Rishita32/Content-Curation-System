@@ -1,5 +1,5 @@
+import 'package:CheerApp/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:CheerApp/services/auth.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -7,7 +7,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final AuthService _auth = AuthService();
+  //final AuthService _auth = AuthService();
+  final User _auth = User();
   final _formKey = GlobalKey<FormState>();
 
   String email, password;
@@ -89,7 +90,7 @@ class _LoginState extends State<Login> {
                         error = 'Credentials were not identified';
                       });
                     } else {
-                      Navigator.pushNamed(context, '/feed');
+                      Navigator.pushReplacementNamed(context, '/feed');
                       setState(() {
                         error = '';
                       });

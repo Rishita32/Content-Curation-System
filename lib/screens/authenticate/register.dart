@@ -1,5 +1,5 @@
+import 'package:CheerApp/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:CheerApp/services/auth.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -7,7 +7,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
+  //final AuthService _auth = AuthService();
+  final User _auth = User();
   final _formKey = GlobalKey<FormState>();
   String name, email, password, confirmPassword;
   String error = '';
@@ -109,14 +110,15 @@ class _RegisterState extends State<Register> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     dynamic result = await _auth.registerWithEmailAndPassword(
-                        email, password);
+                        email, password, name);
                     if (result == null) {
                       setState(() {
                         error = 'Please supply a valid email';
                       });
                     } else {
                       print("user registered");
-                      Navigator.pushNamed(context, '/selectCategories');
+                      Navigator.pushReplacementNamed(
+                          context, '/selectCategories');
                       setState(() {
                         error = 'user registered';
                       });
