@@ -24,7 +24,7 @@ class Splash extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     child: Text('Login'),
                     color: Colors.black,
@@ -38,7 +38,7 @@ class Splash extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/register');
+                      Navigator.pushReplacementNamed(context, '/register');
                     },
                     child: Text('Register'),
                     color: Colors.black,

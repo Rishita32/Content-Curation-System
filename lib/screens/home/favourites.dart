@@ -1,12 +1,12 @@
 import 'package:CheerApp/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class Feed extends StatefulWidget {
+class Favourites extends StatefulWidget {
   @override
-  _FeedState createState() => _FeedState();
+  _FavouritesState createState() => _FavouritesState();
 }
 
-class _FeedState extends State<Feed> {
+class _FavouritesState extends State<Favourites> {
   final AuthService _authS = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -47,6 +47,7 @@ class _FeedState extends State<Feed> {
   }
 
   void onTabTapped(int index) {
+    if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
     if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
     if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
   }

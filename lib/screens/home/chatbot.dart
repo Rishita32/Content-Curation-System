@@ -1,18 +1,17 @@
-import 'package:CheerApp/models/user.dart';
 import 'package:CheerApp/services/auth.dart';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
 
-class Feed extends StatefulWidget {
+class ChatBot extends StatefulWidget {
   @override
-  _FeedState createState() => _FeedState();
+  _ChatBotState createState() => _ChatBotState();
 }
 
-class _FeedState extends State<Feed> {
+class _ChatBotState extends State<ChatBot> {
   final AuthService _authS = AuthService();
-  final User _auth = User();
+
   void response(query) async {
     AuthGoogle authGoogle =
         await AuthGoogle(fileJson: "assets/service.json").build();
@@ -43,7 +42,8 @@ class _FeedState extends State<Feed> {
             icon: Icon(Icons.person),
             label: Text('logout'),
             onPressed: () async {
-              await _auth.signOut();
+              await _authS.signOut();
+              Navigator.pop(context);
             },
           ),
         ],
@@ -131,6 +131,25 @@ class _FeedState extends State<Feed> {
           )
         ],
       )),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.orange,
+        selectedItemColor: Colors.black,
+
+        onTap: onTabTapped, // new
+        // ne// this will be set when a new tab is tapped
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text('Feed'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.mail),
+            title: new Text('Favourites'),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), title: Text('ChatBot'))
+        ],
+      ),
     );
   }
 
@@ -193,5 +212,11 @@ class _FeedState extends State<Feed> {
         ],
       ),
     );
+  }
+
+  void onTabTapped(int index) {
+    if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
+    if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
+    if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
   }
 }
