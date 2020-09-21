@@ -5,6 +5,7 @@ import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
 
 class ChatBot extends StatefulWidget {
+  
   @override
   _ChatBotState createState() => _ChatBotState();
 }
@@ -14,7 +15,7 @@ class _ChatBotState extends State<ChatBot> {
 
   void response(query) async {
     AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/service.json").build();
+        await AuthGoogle(fileJson: "assets/chatbot.json").build();
     Dialogflow dialogflow =
         Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse aiResponse = await dialogflow.detectIntent(query);
@@ -27,7 +28,7 @@ class _ChatBotState extends State<ChatBot> {
     print(aiResponse.getListMessage()[0]["text"]["text"][0].toString());
   }
 
-  final messageInsert = TextEditingController();
+  final messageController = TextEditingController();
   List<Map> messages = new List();
 
   @override
@@ -92,7 +93,7 @@ class _ChatBotState extends State<ChatBot> {
                     color: Color.fromRGBO(220, 220, 220, 1)),
                 padding: EdgeInsets.only(left: 15),
                 child: TextFormField(
-                  controller: messageInsert,
+                  controller: messageController,
                   decoration: InputDecoration(
                     hintText: "Enter a message",
                     hintStyle: TextStyle(color: Colors.black26),
@@ -111,15 +112,15 @@ class _ChatBotState extends State<ChatBot> {
               trailing: IconButton(
                 icon: Icon(Icons.send, size: 30, color: Colors.orange),
                 onPressed: () {
-                  if (messageInsert.text.isEmpty) {
+                  if (messageController.text.isEmpty) {
                     print("Empty Message");
                   } else {
                     setState(() {
                       messages.insert(
-                          0, {"data": 1, "message": messageInsert.text});
+                          0, {"data": 1, "message": messageController.text});
                     });
-                    response(messageInsert.text);
-                    messageInsert.clear();
+                    response(messageController.text);
+                    messageController.clear();
                   }
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (!currentFocus.hasPrimaryFocus) {
@@ -160,8 +161,7 @@ class _ChatBotState extends State<ChatBot> {
         mainAxisAlignment:
             data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          data == 0
-              ? Container(
+          data == 0 ? Container(
                   height: 60,
                   width: 60,
                   child: CircleAvatar(
