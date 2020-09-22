@@ -22,7 +22,7 @@ class _ChatBotState extends State<ChatBot> {
     setState(() {
       messages.insert(0, {
         "data": 0,
-        "messages": aiResponse.getListMessage()[0]["text"]["text"][0].toString()
+        "message": aiResponse.getListMessage()[0]["text"]["text"][0].toString()
       });
     });
     print(aiResponse.getListMessage()[0]["text"]["text"][0].toString());
@@ -155,6 +155,7 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   Widget chat(String message, int data) {
+    print('wwwww  '+message);
     return Container(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
@@ -168,7 +169,13 @@ class _ChatBotState extends State<ChatBot> {
                     backgroundImage: AssetImage("assets/robot.jpg"),
                   ),
                 )
-              : Container(),
+              : Container(
+                  height: 60,
+                  width: 60,
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage("assets/default.jpg"),
+                  ),
+                ),
           Padding(
             padding: EdgeInsets.all(10),
             child: Bubble(
@@ -200,15 +207,7 @@ class _ChatBotState extends State<ChatBot> {
               ),
             ),
           ),
-          data == 1
-              ? Container(
-                  height: 60,
-                  width: 60,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/default.jpg"),
-                  ),
-                )
-              : Container(),
+          
         ],
       ),
     );
