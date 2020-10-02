@@ -1,4 +1,5 @@
 import 'package:CheerApp/services/auth.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class Favourites extends StatefulWidget {
@@ -26,29 +27,32 @@ class _FavouritesState extends State<Favourites> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(
+        color: Colors.white,
         backgroundColor: Colors.orange,
-        selectedItemColor: Colors.black,
-        onTap: onTabTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Favourites'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('ChatBot'))
+        buttonBackgroundColor: Colors.white,
+        height: 50,
+       
+        items: [  
+          Icon(Icons.home, size: 20, color: Colors.black,),
+          Icon(Icons.favorite, size: 20, color: Colors.black,),
+          Icon(Icons.chat_bubble, size: 20, color: Colors.black,),
+
         ],
-      ),
-    );
+        animationDuration: Duration(  
+          milliseconds: 200
+        ),
+       
+        onTap: (index){  
+          setState(() {
+            if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
+            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
+          });
+        }
+      ), 
+
+      );
   }
 
-  void onTabTapped(int index) {
-    if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
-    if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-    if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
-  }
+ 
 }

@@ -1,5 +1,9 @@
-import 'package:CheerApp/services/auth.dart';
+//import 'package:CheerApp/services/auth.dart';
+import 'package:CheerApp/screens/home/main_drawer.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import './main_drawer.dart';
+
 
 class Feed extends StatefulWidget {
   @override
@@ -7,47 +11,58 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  final AuthService _authS = AuthService();
+  //final AuthService _authS = AuthService();
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    var curvedNavigationBar = CurvedNavigationBar(  
+        color: Colors.white,
+        backgroundColor: Colors.orange,
+        buttonBackgroundColor: Colors.white,
+        height: 50,
+       
+        items:[  
+          Icon(Icons.home, size: 20, color: Colors.black,),
+          Icon(Icons.favorite, size: 20, color: Colors.black,),
+          Icon(Icons.chat_bubble, size: 20, color: Colors.black,),
+
+        ],
+        animationDuration: Duration(  
+          milliseconds: 200
+        ),
+        
+        onTap: (index){  
+          setState(() {
+            
+            if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
+            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
+          });
+        }
+      );
+    return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.orange,
         centerTitle: true,
-        title: Text("Cheer!"),
-        backgroundColor: Colors.orange,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _authS.signOut();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+        title: Text("Cheer!" , 
+        style: TextStyle(color: Colors.black) ,
+        ),
+      
+        // actions: <Widget>[
+        //   FlatButton.icon(
+        //     icon: Icon(Icons.person),
+        //     label: Text('logout'),
+        //     onPressed: () async {
+        //       await _authS.signOut();
+        //       Navigator.pop(context);
+        //     },
+        //   ),
+        // ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.orange,
-        selectedItemColor: Colors.black,
-        onTap: onTabTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Favourites'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('ChatBot'))
-        ],
-      ),
+      drawer: MainDrawer(),
+      
+      bottomNavigationBar: curvedNavigationBar
     );
   }
 
-  void onTabTapped(int index) {
-    if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-    if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
-  }
+ 
 }

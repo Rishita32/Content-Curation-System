@@ -1,8 +1,11 @@
-import 'package:CheerApp/services/auth.dart';
+//import 'package:CheerApp/services/auth.dart';
+import 'package:CheerApp/screens/home/main_drawer.dart';
 import 'package:bubble/bubble.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
+import './main_drawer.dart';
 
 class ChatBot extends StatefulWidget {
   
@@ -11,7 +14,7 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-  final AuthService _authS = AuthService();
+  //final AuthService _authS = AuthService();
 
   void response(query) async {
     AuthGoogle authGoogle =
@@ -22,35 +25,34 @@ class _ChatBotState extends State<ChatBot> {
     setState(() {
       messages.insert(0, {
         "data": 0,
-        "messages": aiResponse.getListMessage()[0]["text"]["text"][0].toString()
+        "message": aiResponse.getListMessage()[0]["text"]["text"][0].toString()
       });
     });
-    print(aiResponse.getListMessage());
-    
+    print(aiResponse.getListMessage()[0]["text"]["text"][0].toString());
   }
 
-  final TextEditingController messageController = new TextEditingController();
-
+  final messageController = TextEditingController();
   List<Map> messages = new List();
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return new Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Welcome to Cheer App"),
         backgroundColor: Colors.orange,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _authS.signOut();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   FlatButton.icon(
+        //     icon: Icon(Icons.person),
+        //     label: Text('logout'),
+        //     onPressed: () async {
+        //       await _authS.signOut();
+        //       Navigator.pop(context);
+        //     },
+        //   ),
+        // ],
       ),
+      drawer: MainDrawer(),
       body: Container(
           child: Column(
         children: <Widget>[
@@ -124,41 +126,49 @@ class _ChatBotState extends State<ChatBot> {
                     response(messageController.text);
                     messageController.clear();
                   }
-                  
-                }
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
               ),
             ),
           )
         ],
       )),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(  
+        color: Colors.white,
         backgroundColor: Colors.orange,
-        selectedItemColor: Colors.black,
+        buttonBackgroundColor: Colors.white,
+        height: 50,
+       
+        items:[  
+          Icon(Icons.home, size: 20, color: Colors.black,),
+          Icon(Icons.favorite, size: 20, color: Colors.black,),
+          Icon(Icons.chat_bubble, size: 20, color: Colors.black,),
 
-        onTap: onTabTapped, // new
-        // ne// this will be set when a new tab is tapped
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Favourites'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('ChatBot'))
         ],
+        animationDuration: Duration(  
+          milliseconds: 200
+        ),
+        
+        onTap: (index){  
+          setState(() {
+            if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
+            if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
+            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
+          });
+        }
       ),
     );
   }
 
   Widget chat(String message, int data) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.all(10.0),
       child: Bubble(
           radius: Radius.circular(15.0),
-          color: data == 0 ? Colors.orangeAccent: Colors.orangeAccent,
+          color: data == 0 ? Colors.orangeAccent : Colors.orangeAccent,
           elevation: 0.0,
           alignment: data == 0 ? Alignment.topLeft : Alignment.topRight,
           nip: data == 0 ? BubbleNip.leftBottom : BubbleNip.rightTop,
@@ -186,9 +196,5 @@ class _ChatBotState extends State<ChatBot> {
     );
   }
 
-  void onTabTapped(int index) {
-    if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
-    if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-    if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
-  }
+  
 }
