@@ -1,8 +1,11 @@
-import 'package:CheerApp/services/auth.dart';
+//import 'package:CheerApp/services/auth.dart';
+import 'package:CheerApp/screens/home/main_drawer.dart';
 import 'package:bubble/bubble.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
+import './main_drawer.dart';
 
 class ChatBot extends StatefulWidget {
   
@@ -11,7 +14,7 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-  final AuthService _authS = AuthService();
+  //final AuthService _authS = AuthService();
 
   void response(query) async {
     AuthGoogle authGoogle =
@@ -38,17 +41,18 @@ class _ChatBotState extends State<ChatBot> {
         centerTitle: true,
         title: Text("Welcome to Cheer App"),
         backgroundColor: Colors.orange,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _authS.signOut();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   FlatButton.icon(
+        //     icon: Icon(Icons.person),
+        //     label: Text('logout'),
+        //     onPressed: () async {
+        //       await _authS.signOut();
+        //       Navigator.pop(context);
+        //     },
+        //   ),
+        // ],
       ),
+      drawer: MainDrawer(),
       body: Container(
           child: Column(
         children: <Widget>[
@@ -132,90 +136,65 @@ class _ChatBotState extends State<ChatBot> {
           )
         ],
       )),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(  
+        color: Colors.white,
         backgroundColor: Colors.orange,
-        selectedItemColor: Colors.black,
+        buttonBackgroundColor: Colors.white,
+        height: 50,
+       
+        items:[  
+          Icon(Icons.home, size: 20, color: Colors.black,),
+          Icon(Icons.favorite, size: 20, color: Colors.black,),
+          Icon(Icons.chat_bubble, size: 20, color: Colors.black,),
 
-        onTap: onTabTapped, // new
-        // ne// this will be set when a new tab is tapped
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Feed'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Favourites'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('ChatBot'))
         ],
+        animationDuration: Duration(  
+          milliseconds: 200
+        ),
+        
+        onTap: (index){  
+          setState(() {
+            if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
+            if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
+            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
+          });
+        }
       ),
     );
   }
 
   Widget chat(String message, int data) {
-    print('wwwww  '+message);
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment:
-            data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          data == 0 ? Container(
-                  height: 60,
-                  width: 60,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/robot.jpg"),
-                  ),
-                )
-              : Container(
-                  height: 60,
-                  width: 60,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/default.jpg"),
-                  ),
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Bubble(
+          radius: Radius.circular(15.0),
+          color: data == 0 ? Colors.orangeAccent : Colors.orangeAccent,
+          elevation: 0.0,
+          alignment: data == 0 ? Alignment.topLeft : Alignment.topRight,
+          nip: data == 0 ? BubbleNip.leftBottom : BubbleNip.rightTop,
+          child: Padding(
+            padding: EdgeInsets.all(2.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: AssetImage(
+                      data == 0 ? "assets/robot.jpg" : "assets/default.jpg"),
                 ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Bubble(
-              radius: Radius.circular(15),
-              color: data == 0
-                  ? Color.fromRGBO(23, 157, 139, 1)
-                  : Colors.orangeAccent,
-              elevation: 0,
-              child: Padding(
-                padding: EdgeInsets.all(2),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: 200),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  ],
+                SizedBox(
+                  width: 10.0,
                 ),
-              ),
+                Flexible(
+                    child: Text(
+                  message,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ))
+              ],
             ),
-          ),
-          
-        ],
-      ),
+          )),
     );
   }
 
-  void onTabTapped(int index) {
-    if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
-    if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-    if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
-  }
+  
 }
