@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget{
   static String routeName;
-
-  
-
   @override 
   Widget build(BuildContext context)
   {
@@ -45,6 +42,7 @@ class UserProfile extends StatelessWidget{
                             fontWeight: FontWeight.bold
                           ),
                           ),
+                          SizedBox(height: 30, )
 
                         ],
                       ) 
