@@ -1,6 +1,7 @@
 import 'package:CheerApp/services/auth.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import './main_drawer.dart'; 
 
 class Favourites extends StatefulWidget {
   @override
@@ -27,6 +28,7 @@ class _FavouritesState extends State<Favourites> {
           ),
         ],
       ),
+      drawer: MainDrawer(),
       bottomNavigationBar: CurvedNavigationBar(
         color: Colors.white,
         backgroundColor: Colors.orange,
