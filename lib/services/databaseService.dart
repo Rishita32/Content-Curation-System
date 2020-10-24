@@ -13,8 +13,9 @@ class DatabaseService {
 
     try {
       await _firestore.collection("users").document(user.userId).setData({
-        'fullName': user.userName.trim(),
-        'email': user.userEmail.trim(),
+        'userId': user.userId.trim(),
+        'userName': user.userName.trim(),
+        'userEmail': user.userEmail.trim(),
       });
       retVal = "success";
     } catch (e) {

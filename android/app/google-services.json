@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "678126446598",
-    "firebase_url": "https://cheer-a319f.firebaseio.com",
-    "project_id": "cheer-a319f",
-    "storage_bucket": "cheer-a319f.appspot.com"
+    "project_number": "994426622703",
+    "firebase_url": "https://content-curation-system.firebaseio.com",
+    "project_id": "content-curation-system",
+    "storage_bucket": "content-curation-system.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:678126446598:android:39ddd2c739f3d6b4c63b87",
+        "mobilesdk_app_id": "1:994426622703:android:f898e083dae5f8a6e9411a",
         "android_client_info": {
-          "package_name": "com.sadlol.CheerApp"
+          "package_name": "com.smc.cheer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "678126446598-ablspnhgtbf4obna1uhchs8pnaphqsff.apps.googleusercontent.com",
+          "client_id": "994426622703-fd7tc3jtf6knq448b3gb1ofn52jt393t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCmqLA1jI5_bAaJkfthcZTK5Tm41wDSmXo"
+          "current_key": "AIzaSyBzh51Oz-i6mJaFII4UMcV6dVarDx-YAAI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "678126446598-ablspnhgtbf4obna1uhchs8pnaphqsff.apps.googleusercontent.com",
+              "client_id": "994426622703-fd7tc3jtf6knq448b3gb1ofn52jt393t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
