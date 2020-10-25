@@ -156,7 +156,7 @@ class _ChatBotState extends State<ChatBot> {
           setState(() {
             if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
             if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
+            
           });
         }
       ),

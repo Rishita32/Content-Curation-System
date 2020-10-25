@@ -44,7 +44,7 @@ class _FeedState extends State<Feed> {
       });
 
     });
-    getNews("http://newsapi.org/v2/everything?q=bitcoin&from=2020-09-03&sortBy=publishedcb8999c8da2a445c877f87790c8c12f2cb8999c8da2a445c877f87790c8c12f2" , 
+    getNews("http://newsapi.org/v2/everything?q=bitcoin&from=2020-09-12&sortBy=publishedAt&apiKey=cb8999c8da2a445c877f87790c8c12f2" , 
     "cb8999c8da2a445c877f87790c8c12f2").then((n) {
       setState(() {
         articles2 = n.articles.toList();
@@ -110,13 +110,7 @@ class _FeedState extends State<Feed> {
       drawer: MainDrawer(),
       
       bottomNavigationBar: curvedNavigationBar,
-      
-      // ignore: missing_required_param
-      floatingActionButton: FloatingActionButton(  
-        child: Icon(Icons.view_carousel, color: Colors.white,),
-        backgroundColor: Colors.black,
-      ),
-
+    
       body: Stack(
         fit: StackFit.expand,
         overflow: Overflow.visible,
@@ -342,26 +336,6 @@ class _FeedState extends State<Feed> {
                     itemCount: articles3.length,
                     ),
                 ),
-                Container(  
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width / 2.3,
-                  child: ListView(  
-                    children: List.generate(10, (index)
-                    {
-                      return Container(  
-                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        height: MediaQuery.of(context).size.height / 4,
-                        decoration: BoxDecoration(color: Colors.yellow),
-
-
-                      );
-
-                    }
-                    ).toList()
-                  ),
-                )
-
-
               ],
             ),
           )
