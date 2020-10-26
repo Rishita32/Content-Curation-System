@@ -10,26 +10,31 @@ import 'package:CheerApp/screens/authenticate/splash.dart';
 import 'package:CheerApp/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
-        value: User().user,
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Wrapper(),
-          // initialRoute: '/login',
-          routes: {
-            '/splash': (context) => Splash(),
-            '/login': (context) => Login(),
-            '/register': (context) => Register(),
-            '/feed': (context) => Feed(),
-            '/chatBot': (context) => ChatBot(),
-            '/selectCategories': (context) => SelectCategories(),
-            '/favourites': (context) => Favourites(),
-          },
-        ));
-  }
-}
+
+        
+                    value: User().user,
+                    child: MaterialApp(
+                      debugShowCheckedModeBanner: false,
+                      home: Wrapper(),
+                      // initialRoute: '/login',
+                      routes: {
+                        '/splash': (context) => Splash(),
+                        '/login': (context) => Login(),
+                        '/register': (context) => Register(),
+                        '/feed': (context) => Feed(),
+                        '/chatBot': (context) => ChatBot(),
+                        '/selectCategories': (context) => SelectCategories(),
+                        '/favourites': (context) => Favourites(),
+                      },
+                    ));
+              }
+            }
+            
+            

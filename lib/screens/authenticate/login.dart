@@ -1,4 +1,5 @@
-import 'package:CheerApp/models/user.dart';
+//import 'package:CheerApp/models/user.dart';
+import 'package:CheerApp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -7,8 +8,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //final AuthService _auth = AuthService();
-  final User _auth = User();
+  final AuthService _auth = AuthService();
+  //final User auth1 = User();
   final _formKey = GlobalKey<FormState>();
 
   String email, password;
@@ -76,7 +77,11 @@ class _LoginState extends State<Login> {
                   )),
               FlatButton(
                 onPressed: () {},
-                child: Text("Forgot Password"),
+                child: Text("Forgot Password? "),
+              ),
+                 FlatButton(
+                onPressed: () {},
+                child: Text("Create new account? "),
               ),
               RaisedButton(
                 onPressed: () async {
