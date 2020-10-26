@@ -1,7 +1,5 @@
 //import 'package:CheerApp/services/auth.dart';
 
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
 //import 'package:CheerApp/models/category.dart';
 import 'package:CheerApp/screens/home/main_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -65,13 +63,14 @@ Widget build(BuildContext context) {
               drawer: MainDrawer(),
               
               bottomNavigationBar: curvedNavigationBar,
-              // ignore: missing_required_param
+             
               body: StreamBuilder(  
-                stream: Firestore.instance.collection("content").snapshots(),
-                // ignore: missing_return
-                builder: (context, snapshot){
+                stream: Firestore.instance.collection('content').snapshots(),
+            
+                builder: (context,snapshot){
+                 
                   if(!snapshot.hasData){
-                    const Text("loading");
+                   return const  Text("loading");
                   }
                   else
                   {
@@ -107,12 +106,12 @@ Widget build(BuildContext context) {
                                           ),
                                           SizedBox(height: 10.0,),
                                           Text('${content['title']}',
-                                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
 
                                           ),
                                           SizedBox(height: 10.0,),
                                            Text('${content['description']}',
-                                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold ,color: Colors.blueGrey),
+                                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold ,color: Colors.blueGrey),
 
                                           ),
                                   
