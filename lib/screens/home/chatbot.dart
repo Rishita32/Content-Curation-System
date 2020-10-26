@@ -1,4 +1,3 @@
-//import 'package:CheerApp/services/auth.dart';
 import 'package:CheerApp/screens/home/main_drawer.dart';
 import 'package:bubble/bubble.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -8,14 +7,11 @@ import 'package:intl/intl.dart';
 import './main_drawer.dart';
 
 class ChatBot extends StatefulWidget {
-  
   @override
   _ChatBotState createState() => _ChatBotState();
 }
 
 class _ChatBotState extends State<ChatBot> {
-  //final AuthService _authS = AuthService();
-
   void response(query) async {
     AuthGoogle authGoogle =
         await AuthGoogle(fileJson: "assets/chatbot.json").build();
@@ -41,16 +37,6 @@ class _ChatBotState extends State<ChatBot> {
         centerTitle: true,
         title: Text("Welcome to Cheer App"),
         backgroundColor: Colors.orange,
-        // actions: <Widget>[
-        //   FlatButton.icon(
-        //     icon: Icon(Icons.person),
-        //     label: Text('logout'),
-        //     onPressed: () async {
-        //       await _authS.signOut();
-        //       Navigator.pop(context);
-        //     },
-        //   ),
-        // ],
       ),
       drawer: MainDrawer(),
       body: Container(
@@ -136,30 +122,36 @@ class _ChatBotState extends State<ChatBot> {
           )
         ],
       )),
-      bottomNavigationBar: CurvedNavigationBar(  
-        color: Colors.white,
-        backgroundColor: Colors.orange,
-        buttonBackgroundColor: Colors.white,
-        height: 50,
-       
-        items:[  
-          Icon(Icons.home, size: 20, color: Colors.black,),
-          Icon(Icons.favorite, size: 20, color: Colors.black,),
-          Icon(Icons.chat_bubble, size: 20, color: Colors.black,),
-
-        ],
-        animationDuration: Duration(  
-          milliseconds: 200
-        ),
-        
-        onTap: (index){  
-          setState(() {
-            if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
-            if (index == 1) Navigator.pushReplacementNamed(context, '/favourites');
-            if (index == 2) Navigator.pushReplacementNamed(context, '/chatBot');
-          });
-        }
-      ),
+      bottomNavigationBar: CurvedNavigationBar(
+          color: Colors.white,
+          backgroundColor: Colors.orange,
+          buttonBackgroundColor: Colors.white,
+          height: 50,
+          items: [
+            Icon(
+              Icons.home,
+              size: 20,
+              color: Colors.black,
+            ),
+            Icon(
+              Icons.favorite,
+              size: 20,
+              color: Colors.black,
+            ),
+            Icon(
+              Icons.chat_bubble,
+              size: 20,
+              color: Colors.black,
+            ),
+          ],
+          animationDuration: Duration(milliseconds: 200),
+          onTap: (index) {
+            setState(() {
+              if (index == 0) Navigator.pushReplacementNamed(context, '/feed');
+              if (index == 1)
+                Navigator.pushReplacementNamed(context, '/favourites');
+            });
+          }),
     );
   }
 
@@ -195,6 +187,4 @@ class _ChatBotState extends State<ChatBot> {
           )),
     );
   }
-
-  
 }

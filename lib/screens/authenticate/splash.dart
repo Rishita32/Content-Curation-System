@@ -1,52 +1,75 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'login.dart';
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
+  State<StatefulWidget> createState() => StartState();
+
+  
+}
+class StartState extends State<Splash>
+{
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber[400],
-      body: Center(
-          heightFactor: 40,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Cheer!",
-                  style: TextStyle(
-                    fontSize: 80.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(height: 120),
-                Container(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/login');
-                    },
-                    child: Text('Login'),
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/register');
-                    },
-                    child: Text('Register'),
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  ),
-                )
-              ])),
+  Widget build(BuildContext context){
+    return initScreen(context);
+  }
+  @override 
+  void initState()
+  {
+    super.initState();
+    startTimer();
+  }
+  startTimer() async{
+    var duration= Duration(seconds: 3);
+    return new Timer(duration,route);
+  }
+  route(){
+    Navigator.pushReplacement(context, MaterialPageRoute( 
+      builder: (context) => Login()
+    ));
+  }
+  
+  initScreen(BuildContext context)
+  {
+    return Scaffold(  
+      backgroundColor: Colors.white,
+      body: Center(  
+        child: Column(  
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[  
+            Container( 
+              child: Image.asset("assets/cheer.png"),
+              decoration: BoxDecoration(  
+                shape: BoxShape.circle,
+                color: Colors.orange,
+              
+
+              ),
+              margin: EdgeInsets.all(55.0),
+              padding: EdgeInsets.all(55.0),
+            
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            Text( 
+              "Let's get started",
+              style: TextStyle(  
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+              ),
+
+            ),
+             Padding(padding: EdgeInsets.only(top: 20.0)),
+            CircularProgressIndicator(
+              backgroundColor: Colors.white,
+              strokeWidth: 1,
+            )
+        
+          ],
+        ),
+      ),
     );
   }
+
+ 
 }

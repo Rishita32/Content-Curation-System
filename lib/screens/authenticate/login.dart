@@ -1,4 +1,5 @@
 import 'package:CheerApp/models/user.dart';
+//import 'package:CheerApp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -76,7 +77,13 @@ class _LoginState extends State<Login> {
                   )),
               FlatButton(
                 onPressed: () {},
-                child: Text("Forgot Password"),
+                child: Text("Forgot Password? "),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
+                child: Text("Create new account? "),
               ),
               RaisedButton(
                 onPressed: () async {
