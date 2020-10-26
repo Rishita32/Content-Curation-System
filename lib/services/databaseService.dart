@@ -16,6 +16,7 @@ class DatabaseService {
         'userId': user.userId.trim(),
         'userName': user.userName.trim(),
         'userEmail': user.userEmail.trim(),
+        'categories': []
       });
       retVal = "success";
     } catch (e) {
