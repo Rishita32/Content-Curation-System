@@ -1,16 +1,14 @@
-
-class Category
-{
-  String category; 
+class Category {
+  String category;
   String type;
   String author;
   String title;
-  String content; 
+  String content;
   String description;
   String imageUrl;
   String url;
 
-  // Category( 
+  // Category(
   //   {
   //     this.author,
   //     this.category,
@@ -24,30 +22,27 @@ class Category
 
   // );
 
-  Category.fromMap(Map<String, dynamic> data){
-    category=data['category'];
-    type=data['type'];
-    author=data['author'];
-    title=data['title'];
-    content=data['content'];
-    description=data['description'];
-    imageUrl=data['imageUrl'];
-    url=data['url'];
+  Category.fromMap(Map<String, dynamic> data) {
+    category = data['category'];
+    type = data['type'];
+    author = data['author'];
+    title = data['title'];
+    content = data['content'];
+    description = data['description'];
+    imageUrl = data['imageUrl'];
+    url = data['url'];
   }
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
-      'category':category,
+      'category': category,
       'type': type,
       'author': author,
-      'title':title,
-      'content':content,
+      'title': title,
+      'content': content,
       'description': description,
       'imageUrl': imageUrl,
       'url': url
-
-      
-
     };
   }
 }

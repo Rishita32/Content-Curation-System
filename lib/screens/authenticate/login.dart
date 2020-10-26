@@ -79,8 +79,10 @@ class _LoginState extends State<Login> {
                 onPressed: () {},
                 child: Text("Forgot Password? "),
               ),
-                 FlatButton(
-                onPressed: () {},
+              FlatButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
                 child: Text("Create new account? "),
               ),
               RaisedButton(
