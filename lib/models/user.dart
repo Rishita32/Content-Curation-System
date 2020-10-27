@@ -5,11 +5,13 @@ class User {
   String userId;
   String userName;
   String userEmail;
+  final String uid;
 
   User({
     this.userId,
     this.userName,
     this.userEmail,
+    this.uid,
   });
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,9 +23,7 @@ class User {
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-        //.map((FirebaseUser user) => _userFromFirebaseUser(user));
-        .map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
   //login with email and passwd

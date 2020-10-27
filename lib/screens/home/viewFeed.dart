@@ -1,5 +1,7 @@
 import 'package:CheerApp/screens/home/main_drawer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './main_drawer.dart';
 
@@ -58,114 +60,125 @@ class _ViewFeedState extends State<ViewFeed> {
       ),
       drawer: MainDrawer(),
       bottomNavigationBar: curvedNavigationBar,
-
-      body: SingleChildScrollView(
-              child: Center(  
-          child: Container(  
-            child: Column(  
-              children: <Widget>[
-                Image.network('https://firebasestorage.googleapis.com/v0/b/content-curation-system.appspot.com/o/img2.jpeg?alt=media&token=88920ff5-b048-4b1b-9ca7-c69705e8028a'),
-                SizedBox( height: 32),
-                Padding(  
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  child: Text( 
-                  'Idhar Title Ayega', style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    
+      body: StreamBuilder(
+          stream: Firestore.instance
+              .collection('content')
+              .document(value)
+              .snapshots(),
+          builder: (context, snapshot) {
+            var content = snapshot.data;
+            return SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.network('${content['imageUrl']}'),
+                      SizedBox(height: 32),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Text(
+                          '${content['title']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(13, 10, 13, 10),
+                          child: Text(
+                            '${content['description']}',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          )),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(13, 10, 13, 10),
+                          child: Text(
+                            '${content['articleUrl']}',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey,
+                            ),
+                          )),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                              height: 40.0,
+                              width: 145.0,
+                              child: Material(
+                                borderRadius: BorderRadius.circular(20),
+                                shadowColor: Colors.yellowAccent,
+                                color: Colors.black,
+                                elevation: 7.0,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Center(
+                                    child: Text(
+                                      ' Share ',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          SizedBox(
+                            height: 25.0,
+                          ),
+                          Container(
+                              height: 40.0,
+                              width: 145.0,
+                              child: Material(
+                                borderRadius: BorderRadius.circular(20),
+                                shadowColor: Colors.yellowAccent,
+                                color: Colors.black,
+                                elevation: 7.0,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    FirebaseUser user = await FirebaseAuth
+                                        .instance
+                                        .currentUser();
+                                    final Firestore _firestore =
+                                        Firestore.instance;
+                                    try {
+                                      await _firestore
+                                          .collection("favorites")
+                                          .document()
+                                          .setData({
+                                        'userId': user.uid,
+                                        'contentId': '${content['contentId']}'
+                                      });
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      ' Favourites ',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          SizedBox(
+                            height: 80,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  
                 ),
-                ),
-                Padding( 
-                  padding: EdgeInsets.fromLTRB(13, 10, 13, 10), 
-                  child: Text( 
-                  
-                  'Description: Epic Games, the game engine developer and creator of the wildly popular Fortnite game, is keeping the focus squarely on antitrust issues in its lawsuit against Apple as pressures mount to rein in anti-competitive practices of the world’s largest tech companie'
-                , style: TextStyle( 
-                  
-                  fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black, 
-
-                ),)
-
-                ), 
-              Padding( 
-                  padding: EdgeInsets.fromLTRB(13, 10, 13, 10), 
-                  child: Text( 
-                  
-                  'Read More:  "https://www.newsbtc.com/analysis/btc/its-do-or-die-for-altcoins-as-bitcoin-continues-capturing-dominance/'
-                , style: TextStyle( 
-                  
-                  fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey, 
-
-                ),)
-
-                ),
-                SizedBox( height: 15,),
-                Row(  
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Container(  
-                      height: 40.0,
-                      width:145.0 ,
-                      child: Material( 
-                        borderRadius: BorderRadius.circular(20),
-                        shadowColor: Colors.yellowAccent,
-                        color: Colors.black,
-                        elevation: 7.0,
-                        child: GestureDetector( 
-                          onTap: (){},
-                          child: Center( 
-                          
-                            child: Text( 
-                              ' Share ',
-                              style: TextStyle( fontSize: 18,color: Colors.white),
-                              
-                            ),
-                          ),
-                          
-                        ),
-                      )
-                      
-                    ),
-                    SizedBox( height: 25.0,),
-                     Container(  
-                      height: 40.0,
-                      width:145.0 ,
-                      child: Material( 
-                        borderRadius: BorderRadius.circular(20),
-                        shadowColor: Colors.yellowAccent,
-                        color: Colors.black,
-                        elevation: 7.0,
-                        child: GestureDetector( 
-                          onTap: (){},
-                          child: Center( 
-                          
-                            child: Text( 
-                              ' Favourites ',
-                              style: TextStyle( fontSize: 18,color: Colors.white),
-                              
-                            ),
-                          ),
-                          
-                        ),
-                      )
-                      
-                    ),
-                    SizedBox(height: 80,),
-             
-                  ],
-                )
-                
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            );
+          }),
     );
   }
 }
