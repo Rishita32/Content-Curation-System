@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './main_drawer.dart';
 
 class UserProfile extends StatefulWidget{
@@ -50,7 +51,15 @@ class _UserProfileState extends State<UserProfile>{
               drawer: MainDrawer(),
               bottomNavigationBar: curvedNavigationBar,
 
-              body: new Stack(  
+              body: StreamBuilder(  
+                 stream: Firestore.instance.collection('users')
+              .where('userId', arrayContainsAny: []).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const Text("loading...");
+            }
+            else{
+              return new Stack(  
                 children: <Widget>[ 
                   ClipPath(  
                     child: Container(  
@@ -126,7 +135,10 @@ class _UserProfileState extends State<UserProfile>{
 
                   )
                 ],
-              ),
+              );
+            } 
+          })
+               
 
               
               

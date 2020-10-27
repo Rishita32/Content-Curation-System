@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-// ignore: unused_import
-import 'package:CheerApp/models/category.dart';
-=======
->>>>>>> 96953825ea6e7650bb8e5a7274839b993df3a379
+
 
 class SelectCategories extends StatefulWidget {
   @override

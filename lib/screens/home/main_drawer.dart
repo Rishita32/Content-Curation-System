@@ -1,9 +1,6 @@
 import 'package:CheerApp/models/user.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-//import 'userProfile.dart';
-=======
->>>>>>> 96953825ea6e7650bb8e5a7274839b993df3a379
+
 
 class MainDrawer extends StatelessWidget {
   final User _authS = User();
