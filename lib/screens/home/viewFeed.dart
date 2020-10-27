@@ -1,20 +1,18 @@
 import 'package:CheerApp/screens/home/main_drawer.dart';
-// ignore: unused_import
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import './main_drawer.dart';
 
-// ignore: camel_case_types
-class viewFeed extends StatefulWidget {
+class ViewFeed extends StatefulWidget {
+  String value;
+  ViewFeed({this.value});
   @override
-  _viewFeedState createState() => _viewFeedState();
+  _ViewFeedState createState() => _ViewFeedState(value);
 }
-// ignore: camel_case_types
-class _viewFeedState extends State<viewFeed>{
+
+class _ViewFeedState extends State<ViewFeed> {
+  String value;
+  _ViewFeedState(this.value);
   @override
   Widget build(BuildContext context) {
     var curvedNavigationBar = CurvedNavigationBar(
@@ -60,7 +58,5 @@ class _viewFeedState extends State<viewFeed>{
       drawer: MainDrawer(),
       bottomNavigationBar: curvedNavigationBar,
     );
-
-
   }
 }

@@ -1,5 +1,6 @@
 //import 'package:CheerApp/models/category.dart';
 import 'package:CheerApp/screens/home/main_drawer.dart';
+import 'package:CheerApp/screens/home/viewFeed.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,9 +63,8 @@ class _FeedState extends State<Feed> {
       drawer: MainDrawer(),
       bottomNavigationBar: curvedNavigationBar,
       body: StreamBuilder(
-          stream: Firestore.instance
-              .collection('content')
-              .where('categoryId', arrayContainsAny: ['Tech', 'sports']).snapshots(),
+          stream: Firestore.instance.collection('content').where('categoryId',
+              arrayContainsAny: ['Tech', 'Sports']).snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Text("loading");
@@ -111,18 +111,24 @@ class _FeedState extends State<Feed> {
                                         SizedBox(
                                           height: 10.0,
                                         ),
-                                        Text(
-                                          '${content['description']}'.substring(0,70),
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.blueGrey),
-                                            
+                                        InkWell(
+                                          child: Text(
+                                            '${content['description']}'
+                                                .substring(0, 70),
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.blueGrey),
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) => ViewFeed(
+                                                        value:
+                                                            '${content['description']}')));
+                                          },
                                         ),
-                                        
-                                        
                                       ],
-                                      
                                     ),
                                   ),
                                 ),
