@@ -14,10 +14,24 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  //Future<FirebaseUser> currentUser = FirebaseAuth.instance.currentUser();
-  //DocumentReference documentReference = Firestore.instance.collection('users').document(currentUser.uid);
-  //DocumentSnapshot documentSnapshot = await documentReference.get();
-  //List categories = documentSnapshot.data['categories'];
+  String userID = "";
+  List categories = [];
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() async {
+        userID = user.uid;
+        print(userID);
+        DocumentReference documentReference =
+            Firestore.instance.collection('users').document(userID);
+        DocumentSnapshot documentSnapshot = await documentReference.get();
+        categories = documentSnapshot.data['categories'];
+        print(categories);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var curvedNavigationBar = CurvedNavigationBar(
@@ -63,8 +77,10 @@ class _FeedState extends State<Feed> {
       drawer: MainDrawer(),
       bottomNavigationBar: curvedNavigationBar,
       body: StreamBuilder(
-          stream: Firestore.instance.collection('content').where('categoryId',
-              arrayContainsAny: ['Tech', 'Sports']).snapshots(),
+          stream: Firestore.instance
+              .collection('content')
+              .where('categoryId', arrayContainsAny: categories)
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Text("loading");
@@ -78,7 +94,7 @@ class _FeedState extends State<Feed> {
                         Column(children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 350.0,
+                            height: 330.0,
                             child: Padding(
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Material(
@@ -114,7 +130,7 @@ class _FeedState extends State<Feed> {
                                         InkWell(
                                           child: Text(
                                             '${content['description']}'
-                                                .substring(0, 70),
+                                                .substring(0, 50),
                                             style: TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.bold,
@@ -125,7 +141,7 @@ class _FeedState extends State<Feed> {
                                                 MaterialPageRoute(
                                                     builder: (context) => ViewFeed(
                                                         value:
-                                                            '${content['description']}')));
+                                                            '${content['contentId']}')));
                                           },
                                         ),
                                       ],
@@ -195,7 +211,6 @@ class _FeedState extends State<Feed> {
   void share(BuildContext context, DocumentSnapshot content) {
     final RenderBox box = context.findRenderObject();
     final String text = '${content['title']}';
-    //final String
     Share.share(text,
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
@@ -216,8 +231,10 @@ class Sharebutton extends StatelessWidget {
         color: Colors.white,
         onPressed: () {
           final RenderBox box = context.findRenderObject();
-          final String text = '${content['title']}';
-          //final String
+          final String text = 'Check out this ' +
+              '${content['contentType']}' +
+              ' Cheer!\n' +
+              '${content['description']}';
           Share.share(text,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
         });

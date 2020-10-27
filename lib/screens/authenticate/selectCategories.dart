@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class SelectCategories extends StatefulWidget {
   @override
   _SelectCategoriesState createState() => _SelectCategoriesState();
@@ -27,7 +26,7 @@ class _SelectCategoriesState extends State<SelectCategories> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                "Select 5 categories to help us know you better.",
+                "Select some categories to help us know you better.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -45,6 +44,7 @@ class _SelectCategoriesState extends State<SelectCategories> {
                   _button('Books', Icons.book),
                   _button('Tech', Icons.computer),
                   _button('Travel', Icons.card_travel),
+                  _button('Business', Icons.business),
                   /* 
                       FlatButton(
                         onPressed: () {},
