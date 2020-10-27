@@ -1,4 +1,4 @@
-class Category {
+class Content {
   String category;
   String type;
   String author;
@@ -8,7 +8,7 @@ class Category {
   String imageUrl;
   String url;
 
-  // Category(
+  // Content(
   //   {
   //     this.author,
   //     this.category,
@@ -22,7 +22,7 @@ class Category {
 
   // );
 
-  Category.fromMap(Map<String, dynamic> data) {
+  Content.fromMap(Map<String, dynamic> data) {
     category = data['category'];
     type = data['type'];
     author = data['author'];
