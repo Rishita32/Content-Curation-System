@@ -64,7 +64,7 @@ class _FeedState extends State<Feed> {
       body: StreamBuilder(
           stream: Firestore.instance
               .collection('content')
-              .where('categoryId', arrayContainsAny: []).snapshots(),
+              .where('categoryId', arrayContainsAny: ['Tech', 'sports']).snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Text("loading");
@@ -112,13 +112,17 @@ class _FeedState extends State<Feed> {
                                           height: 10.0,
                                         ),
                                         Text(
-                                          '${content['description']}',
+                                          '${content['description']}'.substring(0,70),
                                           style: TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.blueGrey),
+                                            
                                         ),
+                                        
+                                        
                                       ],
+                                      
                                     ),
                                   ),
                                 ),
