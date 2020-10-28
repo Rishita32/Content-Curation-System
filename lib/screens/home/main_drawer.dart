@@ -31,7 +31,7 @@ class MainDrawer extends StatelessWidget {
                           fit: BoxFit.fill)),
                 ),
                 Text(
-                  'User Name',
+                  'Rishita Mote',
                   style: TextStyle(fontSize: 22, color: Colors.black),
                 ),
                 Text(
