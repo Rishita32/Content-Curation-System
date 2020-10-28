@@ -146,6 +146,7 @@ class _UserProfileState extends State<UserProfile> {
                                   ),
                                 )),
                           ),
+                          SizedBox(height: 10.0),
                           Container(
                             height: 40.0,
                             width: 145.0,
@@ -159,11 +160,12 @@ class _UserProfileState extends State<UserProfile> {
                                     Navigator.pushReplacementNamed(
                                         context, '/selectCategories');
                                   },
+                                  
                                   child: Center(
                                     child: Text(
                                       '  Update Categories  ',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
+                                          color: Colors.white, fontSize: 15),
                                     ),
                                   ),
                                 )),
