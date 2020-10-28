@@ -3,6 +3,7 @@ import 'package:CheerApp/screens/authenticate/selectCategories.dart';
 import 'package:CheerApp/screens/home/chatbot.dart';
 import 'package:CheerApp/screens/home/favourites.dart';
 import 'package:CheerApp/screens/home/feed.dart';
+import 'package:CheerApp/screens/home/settings.dart';
 import 'package:CheerApp/screens/home/userProfile.dart';
 import 'package:CheerApp/screens/home/viewFeed.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
             '/favourites': (context) => Favourites(),
             '/userProfile': (context) => UserProfile(),
             '/viewfeed': (context) => ViewFeed(),
+            '/settings':(context) => AppSettings(),
           },
         ));
   }

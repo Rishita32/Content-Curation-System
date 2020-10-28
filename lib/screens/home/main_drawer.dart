@@ -58,7 +58,10 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
               )),
-          onTap: null,
+          onTap: (){
+            Navigator.pushReplacementNamed(context, '/settings');
+
+          },
         ),
         ListTile(
           leading: Icon(Icons.help),

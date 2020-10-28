@@ -69,6 +69,7 @@ flutter:
   - assets/default.jpg
   - assets/robot.jpg
   - assets/cheer.png
+  - assets/user1.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see
