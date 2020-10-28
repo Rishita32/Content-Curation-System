@@ -31,7 +31,7 @@ class MainDrawer extends StatelessWidget {
                           fit: BoxFit.fill)),
                 ),
                 Text(
-                  'User Name',
+                  'Rishita Mote',
                   style: TextStyle(fontSize: 22, color: Colors.black),
                 ),
                 Text(
@@ -58,7 +58,10 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
               )),
-          onTap: null,
+          onTap: (){
+            Navigator.pushReplacementNamed(context, '/settings');
+
+          },
         ),
         ListTile(
           leading: Icon(Icons.help),
