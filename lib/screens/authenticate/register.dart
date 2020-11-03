@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(5),
                   child: TextFormField(
                     validator: (value) =>
                         value.isEmpty ? 'Enter your name' : null,
@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
                     decoration: InputDecoration(labelText: 'Name'),
                   )),
               Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(5),
                   child: TextFormField(
                     validator: (value) =>
                         value.isEmpty ? 'Enter your email address' : null,
@@ -73,7 +73,7 @@ class _RegisterState extends State<Register> {
                     decoration: InputDecoration(labelText: 'Email'),
                   )),
               Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(5),
                   child: TextFormField(
                     validator: (value) => value.length < 6
                         ? 'Enter a password with at least 6 characters'
@@ -88,7 +88,7 @@ class _RegisterState extends State<Register> {
                     decoration: InputDecoration(labelText: 'Password'),
                   )),
               Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(5),
                   child: TextFormField(
                     validator: (value) =>
                         value != password ? 'Enter the same password' : null,
@@ -133,7 +133,7 @@ class _RegisterState extends State<Register> {
                 textColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               ),
-              SizedBox(height: 12),
+              
               Text(
                 error,
                 style: TextStyle(color: Colors.red, fontSize: 14),

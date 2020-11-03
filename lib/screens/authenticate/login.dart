@@ -75,10 +75,7 @@ class _LoginState extends State<Login> {
                     },
                     decoration: InputDecoration(labelText: 'Password'),
                   )),
-              FlatButton(
-                onPressed: () {},
-                child: Text("Forgot Password? "),
-              ),
+              
               FlatButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/register');
@@ -112,7 +109,7 @@ class _LoginState extends State<Login> {
                 textColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               ),
-              SizedBox(height: 12),
+              
               Text(
                 error,
                 style: TextStyle(color: Colors.red, fontSize: 14),
