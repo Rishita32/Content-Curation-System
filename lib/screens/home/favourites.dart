@@ -66,8 +66,10 @@ class _FavouritesState extends State<Favourites> {
             });
           }),
       body: StreamBuilder(
-          stream: Firestore.instance.collection('content').where('categoryId',
-              arrayContainsAny: ['Tech', 'Food']).snapshots(),
+          stream: Firestore.instance
+              .collection('favorites')
+              .where('userId', isEqualTo: userID)
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Text("loading");
@@ -81,7 +83,7 @@ class _FavouritesState extends State<Favourites> {
                         Column(children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 330.0,
+                            height: 365.0,
                             child: Padding(
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Material(
@@ -131,6 +133,57 @@ class _FavouritesState extends State<Favourites> {
                                                             '${content['contentId']}')));
                                           },
                                         ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              alignment: Alignment.bottomLeft,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  15, 0, 15, 0),
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xff543B7A),
+                                                child: Sharebutton(
+                                                    content: content),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 250,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.bottomRight,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  15, 0, 15, 0),
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xff543B7A),
+                                                child: new IconButton(
+                                                  icon: Icon(Icons.favorite),
+                                                  color: Colors.white,
+                                                  onPressed: () async {
+                                                    FirebaseUser user =
+                                                        await FirebaseAuth
+                                                            .instance
+                                                            .currentUser();
+                                                    final Firestore _firestore =
+                                                        Firestore.instance;
+                                                    try {
+                                                      await _firestore
+                                                          .collection(
+                                                              "favorites")
+                                                          .document(user.uid)
+                                                          .delete();
+                                                    } catch (e) {
+                                                      print(e);
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -139,51 +192,6 @@ class _FavouritesState extends State<Favourites> {
                             ),
                           )
                         ]),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * .47,
-                            right: MediaQuery.of(context).size.height * .52,
-                          ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: CircleAvatar(
-                              backgroundColor: Color(0xff543B7A),
-                              child: Sharebutton(content: content),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.topRight,
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * .47,
-                            left: MediaQuery.of(context).size.height * .52,
-                          ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: CircleAvatar(
-                              backgroundColor: Color(0xff543B7A),
-                              child: new IconButton(
-                                icon: Icon(Icons.favorite),
-                                color: Colors.white,
-                                onPressed: () async {
-                                  FirebaseUser user =
-                                      await FirebaseAuth.instance.currentUser();
-                                  final Firestore _firestore =
-                                      Firestore.instance;
-                                  try {
-                                    await _firestore
-                                        .collection("favorites")
-                                        .document()
-                                        .delete();
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     );
                   });
@@ -217,7 +225,7 @@ class Sharebutton extends StatelessWidget {
           final RenderBox box = context.findRenderObject();
           final String text = 'Check out this ' +
               '${content['contentType']}' +
-              ' Cheer!\n' +
+              ' on Cheer!\n' +
               '${content['description']}';
           Share.share(text,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
