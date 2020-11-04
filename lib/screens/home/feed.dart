@@ -94,7 +94,7 @@ class _FeedState extends State<Feed> {
                         Column(children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 330.0,
+                            height: 365.0,
                             child: Padding(
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Material(
@@ -125,12 +125,12 @@ class _FeedState extends State<Feed> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
-                                          height: 10.0,
+                                          height: 15.0,
                                         ),
                                         InkWell(
                                           child: Text(
                                             '${content['description']}'
-                                                .substring(0, 50),
+                                                .substring(0, 45),
                                             style: TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.bold,
@@ -144,62 +144,75 @@ class _FeedState extends State<Feed> {
                                                             '${content['contentId']}')));
                                           },
                                         ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              alignment: Alignment.bottomLeft,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  15, 0, 15, 0),
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xff543B7A),
+                                                child: Sharebutton(
+                                                    content: content),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 250,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.bottomRight,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  15, 0, 15, 0),
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Color(0xff543B7A),
+                                                child: new IconButton(
+                                                  icon: Icon(Icons.favorite),
+                                                  color: Colors.white,
+                                                  onPressed: () async {
+                                                    FirebaseUser user =
+                                                        await FirebaseAuth
+                                                            .instance
+                                                            .currentUser();
+                                                    final Firestore _firestore =
+                                                        Firestore.instance;
+                                                    try {
+                                                      await _firestore
+                                                          .collection(
+                                                              "favorites")
+                                                          .document(user.uid)
+                                                          .setData({
+                                                        'userId': user.uid,
+                                                        'contentId':
+                                                            '${content['contentId']}',
+                                                        'title':
+                                                            '${content['title']}',
+                                                        'description':
+                                                            '${content['description']}',
+                                                        'imageUrl':
+                                                            '${content['imageUrl']}',
+                                                      });
+                                                    } catch (e) {
+                                                      print(e);
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ]),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * .47,
-                            right: MediaQuery.of(context).size.height * .52,
-                          ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: CircleAvatar(
-                              backgroundColor: Color(0xff543B7A),
-                              child: Sharebutton(content: content),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.topRight,
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * .47,
-                            left: MediaQuery.of(context).size.height * .52,
-                          ),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: CircleAvatar(
-                              backgroundColor: Color(0xff543B7A),
-                              child: new IconButton(
-                                icon: Icon(Icons.favorite),
-                                color: Colors.white,
-                                onPressed: () async {
-                                  FirebaseUser user =
-                                      await FirebaseAuth.instance.currentUser();
-                                  final Firestore _firestore =
-                                      Firestore.instance;
-                                  try {
-                                    await _firestore
-                                        .collection("favorites")
-                                        .document()
-                                        .setData({
-                                      'userId': user.uid,
-                                      'contentId': '${content['contentId']}'
-                                    });
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     );
                   });
@@ -233,7 +246,7 @@ class Sharebutton extends StatelessWidget {
           final RenderBox box = context.findRenderObject();
           final String text = 'Check out this ' +
               '${content['contentType']}' +
-              ' Cheer!\n' +
+              ' on Cheer!\n' +
               '${content['description']}';
           Share.share(text,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);

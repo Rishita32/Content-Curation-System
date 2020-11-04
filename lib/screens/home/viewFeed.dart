@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import './main_drawer.dart';
 
 // ignore: must_be_immutable
@@ -112,20 +113,26 @@ class _ViewFeedState extends State<ViewFeed> {
                         children: <Widget>[
                           Container(
                               height: 40.0,
-                              width: 145.0,
+                              width: 155.0,
                               child: Material(
                                 borderRadius: BorderRadius.circular(20),
                                 shadowColor: Colors.yellowAccent,
                                 color: Colors.black,
                                 elevation: 7.0,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Center(
+                                child: Center(
+                                  child: RaisedButton(
+                                    color: Colors.black,
                                     child: Text(
                                       ' Share ',
                                       style: TextStyle(
                                           fontSize: 18, color: Colors.white),
                                     ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => ViewFeed(
+                                              value:
+                                                  '${content['contentId']}')));
+                                    },
                                   ),
                                 ),
                               )),
@@ -133,41 +140,26 @@ class _ViewFeedState extends State<ViewFeed> {
                             height: 25.0,
                           ),
                           Container(
-                              height: 40.0,
-                              width: 145.0,
-                              child: Material(
-                                borderRadius: BorderRadius.circular(20),
-                                shadowColor: Colors.yellowAccent,
-                                color: Colors.black,
-                                elevation: 7.0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    FirebaseUser user = await FirebaseAuth
-                                        .instance
-                                        .currentUser();
-                                    final Firestore _firestore =
-                                        Firestore.instance;
-                                    try {
-                                      await _firestore
-                                          .collection("favorites")
-                                          .document()
-                                          .setData({
-                                        'userId': user.uid,
-                                        'contentId': '${content['contentId']}'
-                                      });
-                                    } catch (e) {
-                                      print(e);
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      ' Favourites ',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.white),
-                                    ),
+                            height: 40.0,
+                            width: 155.0,
+                            child: Material(
+                              borderRadius: BorderRadius.circular(20),
+                              shadowColor: Colors.yellowAccent,
+                              color: Colors.black,
+                              elevation: 7.0,
+                              child: Center(
+                                child: RaisedButton(
+                                  color: Colors.black,
+                                  onPressed: () {},
+                                  child: Text(
+                                    ' Favourites ',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
                                   ),
                                 ),
-                              )),
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: 80,
                           ),
@@ -180,5 +172,37 @@ class _ViewFeedState extends State<ViewFeed> {
             );
           }),
     );
+  }
+
+  void share(BuildContext context, DocumentSnapshot content) {
+    final RenderBox box = context.findRenderObject();
+    final String text = '${content['title']}';
+    Share.share(text,
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+}
+
+class Sharebutton extends StatelessWidget {
+  const Sharebutton({
+    Key key,
+    @required this.content,
+  }) : super(key: key);
+
+  final DocumentSnapshot content;
+
+  @override
+  Widget build(BuildContext context) {
+    return new IconButton(
+        icon: new Icon(Icons.share),
+        color: Colors.white,
+        onPressed: () {
+          final RenderBox box = context.findRenderObject();
+          final String text = 'Check out this ' +
+              '${content['contentType']}' +
+              ' on Cheer!\n' +
+              '${content['description']}';
+          Share.share(text,
+              sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+        });
   }
 }
