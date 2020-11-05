@@ -31,7 +31,7 @@ class _FavouritesState extends State<Favourites> {
     return new Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cheer!"),
+        title: Text("Your Favorites"),
         backgroundColor: Colors.orange,
       ),
       drawer: MainDrawer(),
@@ -72,7 +72,15 @@ class _FavouritesState extends State<Favourites> {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const Text("loading");
+              return Center(
+                  child: Container(
+                      child: const Text(
+                "Loading...",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange),
+              )));
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
@@ -159,26 +167,41 @@ class _FavouritesState extends State<Favourites> {
                                               child: CircleAvatar(
                                                 backgroundColor:
                                                     Color(0xff543B7A),
-                                                child: new IconButton(
-                                                  icon: Icon(Icons.favorite),
-                                                  color: Colors.white,
-                                                  onPressed: () async {
-                                                    FirebaseUser user =
-                                                        await FirebaseAuth
-                                                            .instance
-                                                            .currentUser();
-                                                    final Firestore _firestore =
-                                                        Firestore.instance;
-                                                    try {
-                                                      await _firestore
-                                                          .collection(
-                                                              "favorites")
-                                                          .document(user.uid)
-                                                          .delete();
-                                                    } catch (e) {
-                                                      print(e);
-                                                    }
-                                                  },
+                                                child: Builder(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          new IconButton(
+                                                    icon: Icon(Icons.favorite),
+                                                    color: Colors.white,
+                                                    onPressed: () async {
+                                                      FirebaseUser user =
+                                                          await FirebaseAuth
+                                                              .instance
+                                                              .currentUser();
+                                                      final Firestore
+                                                          _firestore =
+                                                          Firestore.instance;
+                                                      try {
+                                                        await _firestore
+                                                            .collection(
+                                                                "favorites")
+                                                            .document(user.uid +
+                                                                content[
+                                                                    'contentId'])
+                                                            .delete();
+                                                        Scaffold.of(context)
+                                                            .showSnackBar(
+                                                                SnackBar(
+                                                          content: Text(
+                                                              'Removed from Favourites!'),
+                                                          duration: Duration(
+                                                              seconds: 2),
+                                                        ));
+                                                      } catch (e) {
+                                                        print(e);
+                                                      }
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                             ),

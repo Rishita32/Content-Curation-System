@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import './main_drawer.dart';
 
@@ -68,50 +70,85 @@ class _ViewFeedState extends State<ViewFeed> {
               .snapshots(),
           builder: (context, snapshot) {
             var content = snapshot.data;
-            return SingleChildScrollView(
-              child: Center(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.network('${content['imageUrl']}'),
-                      SizedBox(height: 32),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: Text(
-                          '${content['title']}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+            //String url = content['articleUrl'];
+            if (!snapshot.hasData) {
+              return Center(
+                  child: Container(
+                      child: const Text(
+                "Loading...",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange),
+              )));
+            } else {
+              return SingleChildScrollView(
+                child: Center(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Image.network('${content['imageUrl']}'),
+                        SizedBox(height: 32),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Text(
+                            '${content['title']}',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(13, 10, 13, 10),
+                            child: Text(
+                              '${content['description']}',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            )),
+                        Padding(
                           padding: EdgeInsets.fromLTRB(13, 10, 13, 10),
-                          child: Text(
-                            '${content['description']}',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          child: InkWell(
+                            onTap: () async {
+                              if (await canLaunch('https://www.google.com')) {
+                                launch('https://www.google.com');
+                              }
+                            },
+                            child: Text(
+                              '${content['articleUrl']}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blueGrey,
+                              ),
                             ),
-                          )),
-                      Padding(
-                          padding: EdgeInsets.fromLTRB(13, 10, 13, 10),
-                          child: Text(
-                            '${content['articleUrl']}',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Container(
+                                height: 40.0,
+                                width: 155.0,
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(20),
+                                  shadowColor: Colors.yellowAccent,
+                                  color: Colors.black,
+                                  elevation: 7.0,
+                                  child: Center(
+                                    child: Sharebutton(content: content),
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 25.0,
                             ),
-                          )),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
+                            Container(
                               height: 40.0,
                               width: 155.0,
                               child: Material(
@@ -120,56 +157,62 @@ class _ViewFeedState extends State<ViewFeed> {
                                 color: Colors.black,
                                 elevation: 7.0,
                                 child: Center(
-                                  child: RaisedButton(
-                                    color: Colors.black,
-                                    child: Text(
-                                      ' Share ',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                  child: Builder(
+                                    builder: (BuildContext context) =>
+                                        new RaisedButton(
+                                      color: Colors.black,
+                                      onPressed: () async {
+                                        FirebaseUser user = await FirebaseAuth
+                                            .instance
+                                            .currentUser();
+                                        final Firestore _firestore =
+                                            Firestore.instance;
+                                        try {
+                                          await _firestore
+                                              .collection("favorites")
+                                              .document(user.uid +
+                                                  content['contentId'])
+                                              .setData({
+                                            'userId': user.uid,
+                                            'contentId':
+                                                '${content['contentId']}',
+                                            'title': '${content['title']}',
+                                            'description':
+                                                '${content['description']}',
+                                            'imageUrl':
+                                                '${content['imageUrl']}',
+                                          });
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content:
+                                                Text('Added to Favourites!'),
+                                            duration: Duration(seconds: 2),
+                                          ));
+                                        } catch (e) {
+                                          print(e);
+                                        }
+                                      },
+                                      child: Text(
+                                        ' Favourites ',
+                                        style: TextStyle(
+                                            fontSize: 18, color: Colors.white),
+                                      ),
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => ViewFeed(
-                                              value:
-                                                  '${content['contentId']}')));
-                                    },
-                                  ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          Container(
-                            height: 40.0,
-                            width: 155.0,
-                            child: Material(
-                              borderRadius: BorderRadius.circular(20),
-                              shadowColor: Colors.yellowAccent,
-                              color: Colors.black,
-                              elevation: 7.0,
-                              child: Center(
-                                child: RaisedButton(
-                                  color: Colors.black,
-                                  onPressed: () {},
-                                  child: Text(
-                                    ' Favourites ',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 80,
-                          ),
-                        ],
-                      )
-                    ],
+                            SizedBox(
+                              height: 80,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
           }),
     );
   }
@@ -192,9 +235,12 @@ class Sharebutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new IconButton(
-        icon: new Icon(Icons.share),
-        color: Colors.white,
+    return new RaisedButton(
+        child: Text(
+          ' Share ',
+          style: TextStyle(fontSize: 18, color: Colors.white),
+        ),
+        color: Colors.black,
         onPressed: () {
           final RenderBox box = context.findRenderObject();
           final String text = 'Check out this ' +
