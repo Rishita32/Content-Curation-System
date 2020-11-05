@@ -71,7 +71,7 @@ class _FeedState extends State<Feed> {
         centerTitle: true,
         title: Text(
           "Cheer!",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       drawer: MainDrawer(),
@@ -83,7 +83,15 @@ class _FeedState extends State<Feed> {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const Text("loading");
+              return Center(
+                  child: Container(
+                      child: const Text(
+                "Loading...",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange),
+              )));
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
@@ -170,36 +178,51 @@ class _FeedState extends State<Feed> {
                                               child: CircleAvatar(
                                                 backgroundColor:
                                                     Color(0xff543B7A),
-                                                child: new IconButton(
-                                                  icon: Icon(Icons.favorite),
-                                                  color: Colors.white,
-                                                  onPressed: () async {
-                                                    FirebaseUser user =
-                                                        await FirebaseAuth
-                                                            .instance
-                                                            .currentUser();
-                                                    final Firestore _firestore =
-                                                        Firestore.instance;
-                                                    try {
-                                                      await _firestore
-                                                          .collection(
-                                                              "favorites")
-                                                          .document(user.uid)
-                                                          .setData({
-                                                        'userId': user.uid,
-                                                        'contentId':
-                                                            '${content['contentId']}',
-                                                        'title':
-                                                            '${content['title']}',
-                                                        'description':
-                                                            '${content['description']}',
-                                                        'imageUrl':
-                                                            '${content['imageUrl']}',
-                                                      });
-                                                    } catch (e) {
-                                                      print(e);
-                                                    }
-                                                  },
+                                                child: Builder(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          new IconButton(
+                                                    icon: Icon(Icons.favorite),
+                                                    color: Colors.white,
+                                                    onPressed: () async {
+                                                      FirebaseUser user =
+                                                          await FirebaseAuth
+                                                              .instance
+                                                              .currentUser();
+                                                      final Firestore
+                                                          _firestore =
+                                                          Firestore.instance;
+                                                      try {
+                                                        await _firestore
+                                                            .collection(
+                                                                "favorites")
+                                                            .document(user.uid +
+                                                                content[
+                                                                    'contentId'])
+                                                            .setData({
+                                                          'userId': user.uid,
+                                                          'contentId':
+                                                              '${content['contentId']}',
+                                                          'title':
+                                                              '${content['title']}',
+                                                          'description':
+                                                              '${content['description']}',
+                                                          'imageUrl':
+                                                              '${content['imageUrl']}',
+                                                        });
+                                                        Scaffold.of(context)
+                                                            .showSnackBar(
+                                                                SnackBar(
+                                                          content: Text(
+                                                              'Added to Favourites!'),
+                                                          duration: Duration(
+                                                              seconds: 2),
+                                                        ));
+                                                      } catch (e) {
+                                                        print(e);
+                                                      }
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                             ),

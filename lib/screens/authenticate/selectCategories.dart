@@ -8,6 +8,16 @@ class SelectCategories extends StatefulWidget {
 }
 
 class _SelectCategoriesState extends State<SelectCategories> {
+  List<bool> pressed = <bool>[
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,14 +47,14 @@ class _SelectCategoriesState extends State<SelectCategories> {
             SizedBox(
                 height: 400,
                 child: GridView.count(crossAxisCount: 4, children: <Widget>[
-                  _button('Animals', Icons.pets),
-                  _button('Sports', Icons.games),
-                  _button('Food', Icons.fastfood),
-                  _button('Movies', Icons.movie),
-                  _button('Books', Icons.book),
-                  _button('Tech', Icons.computer),
-                  _button('Travel', Icons.card_travel),
-                  _button('Business', Icons.business),
+                  _button('Animals', Icons.pets, 0),
+                  _button('Sports', Icons.games, 1),
+                  _button('Food', Icons.fastfood, 2),
+                  _button('Movies', Icons.movie, 3),
+                  _button('Books', Icons.book, 4),
+                  _button('Tech', Icons.computer, 5),
+                  _button('Travel', Icons.card_travel, 6),
+                  _button('Business', Icons.business, 7),
                   /* 
                       FlatButton(
                         onPressed: () {},
@@ -88,8 +98,11 @@ class _SelectCategoriesState extends State<SelectCategories> {
     );
   }
 
-  Widget _button(name, iconname) => FlatButton(
+  Widget _button(name, iconname, index) => FlatButton(
         onPressed: () async {
+          setState(() {
+            pressed[index] = !pressed[index];
+          });
           FirebaseUser user = await FirebaseAuth.instance.currentUser();
           DocumentReference documentReference =
               Firestore.instance.collection('users').document(user.uid);
@@ -107,7 +120,9 @@ class _SelectCategoriesState extends State<SelectCategories> {
         },
         child: ClipOval(
           child: Material(
-            color: Colors.yellow, // button color
+            color: pressed[index]
+                ? Colors.orangeAccent
+                : Colors.yellow, // button color
             child: InkWell(
               splashColor: Colors.orange, // inkwell color
               child: SizedBox(

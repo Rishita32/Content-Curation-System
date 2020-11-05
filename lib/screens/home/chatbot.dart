@@ -35,7 +35,7 @@ class _ChatBotState extends State<ChatBot> {
     return new Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Welcome to Cheer App"),
+        title: Text("ChatBot"),
         backgroundColor: Colors.orange,
       ),
       drawer: MainDrawer(),

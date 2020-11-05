@@ -63,7 +63,7 @@ class _UserProfileState extends State<UserProfile> {
           centerTitle: true,
           title: Text(
             "Cheer!",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
         ),
         drawer: MainDrawer(),
@@ -72,7 +72,15 @@ class _UserProfileState extends State<UserProfile> {
             stream: getData(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return const Text("loading...");
+                return Center(
+                    child: Container(
+                        child: const Text(
+                  "Loading...",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange),
+                )));
               } else {
                 return new Stack(
                   children: <Widget>[
@@ -104,7 +112,7 @@ class _UserProfileState extends State<UserProfile> {
                                       blurRadius: 7.0, color: Colors.black),
                                 ]),
                           ),
-                          SizedBox(height: 60.0),
+                          SizedBox(height: 50.0),
                           Text(
                             snapshot.data['userName'],
                             style: TextStyle(
@@ -125,11 +133,11 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           SizedBox(
-                            height: 20.0,
+                            height: 40.0,
                           ),
                           Container(
-                            height: 40.0,
-                            width: 145.0,
+                            height: 50.0,
+                            width: 200.0,
                             child: Material(
                                 borderRadius: BorderRadius.circular(20),
                                 shadowColor: Colors.yellowAccent,
@@ -139,7 +147,7 @@ class _UserProfileState extends State<UserProfile> {
                                   onTap: () {},
                                   child: Center(
                                     child: Text(
-                                      '  Update Profile  ',
+                                      'Update Profile',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 18),
                                     ),
@@ -148,8 +156,8 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                           SizedBox(height: 10.0),
                           Container(
-                            height: 40.0,
-                            width: 145.0,
+                            height: 50.0,
+                            width: 200.0,
                             child: Material(
                                 borderRadius: BorderRadius.circular(20),
                                 shadowColor: Colors.yellowAccent,
@@ -160,12 +168,11 @@ class _UserProfileState extends State<UserProfile> {
                                     Navigator.pushReplacementNamed(
                                         context, '/selectCategories');
                                   },
-                                  
                                   child: Center(
                                     child: Text(
-                                      '  Update Categories  ',
+                                      'Update Categories',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
+                                          color: Colors.white, fontSize: 18),
                                     ),
                                   ),
                                 )),
